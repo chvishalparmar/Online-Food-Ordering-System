@@ -1,5 +1,5 @@
 package com.food.ordersystem.vaildationgroup;
 
-public interface UpdateUserGroup {
+public interface UpdateGroup {
     
 }

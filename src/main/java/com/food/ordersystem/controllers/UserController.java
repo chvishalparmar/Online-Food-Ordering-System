@@ -13,7 +13,7 @@ import com.food.ordersystem.dto.APIResponse;
 import com.food.ordersystem.dto.UserDto;
 import com.food.ordersystem.enitites.User;
 import com.food.ordersystem.services.UserService;
-import com.food.ordersystem.vaildationgroup.UpdateUserGroup;
+import com.food.ordersystem.vaildationgroup.UpdateGroup;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -49,7 +49,7 @@ public class UserController {
     }
 
     @PutMapping("update")
-    public ResponseEntity<APIResponse<?>> updateUser( @Validated(UpdateUserGroup.class) @RequestBody UserDto userDto) {
+    public ResponseEntity<APIResponse<?>> updateUser( @Validated(UpdateGroup.class) @RequestBody UserDto userDto) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         userDto.setUsername(username);
         User user = userService.updateUser(userDto);

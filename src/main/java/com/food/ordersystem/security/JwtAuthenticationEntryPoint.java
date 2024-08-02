@@ -18,7 +18,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint{
     @Override // when unauthorized person want to access then it will work 
     public void commence(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException authException) throws IOException, ServletException {
-       response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Acess denined !!");
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"Acess denined !!");
     }
 
 }

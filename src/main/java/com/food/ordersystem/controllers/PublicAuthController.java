@@ -17,7 +17,7 @@ import com.food.ordersystem.enitites.User;
 import com.food.ordersystem.security.JwtAuthRequest;
 import com.food.ordersystem.security.JwtTokenUtil;
 import com.food.ordersystem.services.UserService;
-import com.food.ordersystem.vaildationgroup.CreateUserGroup;
+import com.food.ordersystem.vaildationgroup.CreateGroup;
 
 import lombok.RequiredArgsConstructor;
 
@@ -58,7 +58,7 @@ public class PublicAuthController {
     }
 
     @PostMapping("/newuser")
-    public ResponseEntity<APIResponse<?>> CreateNewUser(@Validated(CreateUserGroup.class) @RequestBody UserDto userDto) {
+    public ResponseEntity<APIResponse<?>> CreateNewUser(@Validated(CreateGroup.class) @RequestBody UserDto userDto) {
 
         User createdUser = userService.saveUser(userDto);
         

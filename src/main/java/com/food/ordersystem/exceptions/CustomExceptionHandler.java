@@ -18,6 +18,8 @@ import com.food.ordersystem.dto.ErrorDto;
 @RestControllerAdvice
 public class CustomExceptionHandler {
 
+    public static final String FAILED = "Failed";
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<APIResponse<?>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         APIResponse<?> response = new APIResponse<>();
@@ -28,7 +30,7 @@ public class CustomExceptionHandler {
                     ErrorDto errorDTO = new ErrorDto(error.getField(), error.getDefaultMessage());
                     errors.add(errorDTO);
                 });
-        response.setStatus("FAILED");
+        response.setStatus(FAILED);
         response.setErrors(errors);
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
@@ -36,8 +38,27 @@ public class CustomExceptionHandler {
     public ResponseEntity<APIResponse<?>> handleUserNotFoundException(UserNotFoundException e) {
 
        APIResponse<?> response = new APIResponse<>();
-       response.setStatus("FAILED");
+       response.setStatus(FAILED);
        response.setErrors(Collections.singletonList(new ErrorDto("Username", e.getMessage())));
        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(DishNotFoundException.class)
+    public ResponseEntity<APIResponse<?>> handleDishNotFoundException(DishNotFoundException e){
+
+        APIResponse<?> response = new APIResponse<>();
+        response.setStatus(FAILED);
+        response.setErrors(Collections.singletonList(new ErrorDto("Dish", e.getMessage())));
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+
+    }
+
+    @ExceptionHandler(InvalidEnumValueException.class)
+    public ResponseEntity<APIResponse<?>> handleInvalidEnumValueException(InvalidEnumValueException e){
+        APIResponse<?> response = new APIResponse<>();
+        response.setStatus(FAILED);
+        response.setErrors(Collections.singletonList(new ErrorDto("Cuisine", e.getMessage())));
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
 }
