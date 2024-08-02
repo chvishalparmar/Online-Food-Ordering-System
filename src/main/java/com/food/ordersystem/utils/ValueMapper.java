@@ -24,5 +24,14 @@ public class ValueMapper {
         user.setAddress(userDto.getAddress());
         return user;
     }
+
+    public User userUpdate(UserDto userDto , User user){
+        user.setAddress(userDto.getAddress());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setEmail(userDto.getEmail());
+        user.setName(userDto.getName());
+        return user;
+
+    }
     
 }

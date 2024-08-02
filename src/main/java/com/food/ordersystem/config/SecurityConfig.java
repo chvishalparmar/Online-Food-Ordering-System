@@ -17,6 +17,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.food.ordersystem.exceptions.UserNotFoundException;
 import com.food.ordersystem.repo.UserRepo;
 import com.food.ordersystem.security.JwtAuthenticationFilter;
 
@@ -71,16 +72,15 @@ public class SecurityConfig {
      UserDetailsService databaseUserDetailsService = new UserDetailsService() {
         @Override
         public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-            com.food.ordersystem.enitites.User user = userRepo.findByUserName(username);
-            if (user != null) {
+            com.food.ordersystem.enitites.User user = userRepo.findByUserName(username) 
+            .orElseThrow(() -> new UserNotFoundException("User not found with UserName: " + username));
+    
                 return org.springframework.security.core.userdetails.User.builder()
                         .username(user.getUserName())
                         .password(user.getPassword())
                         .roles(user.getRoles())
                         .build();
-            } else {
-                throw new UsernameNotFoundException("User not found with username: " + username);
-            }
+            
         }
     };
 

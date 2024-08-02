@@ -2,6 +2,8 @@ package com.food.ordersystem.enitites;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,7 +29,9 @@ public class User {
     private Long id;
 
     private String userName;
+    @JsonIgnore
     private String password;
+    @JsonIgnore
     private String roles;
     private String name;
     private String address;

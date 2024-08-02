@@ -6,8 +6,11 @@ import com.food.ordersystem.dto.UserDto;
 import com.food.ordersystem.enitites.User;
 
 @Service
-public interface CreateUserService {
+public interface UserService {
 
     User saveUser(UserDto userDto);
+    User getUser(UserDto userDto);
+    User updateUser(UserDto userDto);
+    boolean deleteUser(UserDto userDto);
     
 } 
