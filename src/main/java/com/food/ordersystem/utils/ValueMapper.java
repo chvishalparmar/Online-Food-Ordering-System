@@ -1,25 +1,31 @@
 package com.food.ordersystem.utils;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.food.ordersystem.dto.DishDto;
+import com.food.ordersystem.dto.OrderDto;
+import com.food.ordersystem.dto.OrderItemDTO;
 import com.food.ordersystem.dto.UserDto;
 import com.food.ordersystem.enitites.Dish;
+import com.food.ordersystem.enitites.OrderItem;
+import com.food.ordersystem.enitites.Orders;
 import com.food.ordersystem.enitites.User;
 import com.food.ordersystem.enums.Cuisine;
-import com.food.ordersystem.exceptions.InvalidEnumValueException;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class ValueMapper {
 
    
     private final PasswordEncoder passwordEncoder;
+    private final EnumValueChecker enumValueChecker;
 
-    public ValueMapper(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
 
-    public  User userDtoToUser(UserDto userDto){
+    public  User userDto_To_User(UserDto userDto){
         User user = new User();
         user.setUserName(userDto.getUsername());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
@@ -38,14 +44,14 @@ public class ValueMapper {
 
     }
 
-    public Dish dishDtotoDish(DishDto dishDto){
+    public Dish dishDto_To_Dish(DishDto dishDto){
         Dish dish = new Dish();
         dish.setName(dishDto.getName());
-        dish.setAvailability(dish.getAvailability());
+        dish.setAvailability(dishDto.getAvailability());
         dish.setDescription(dishDto.getDescription());
         dish.setAvgRating(0.0);
         dish.setPrice(dishDto.getPrice());
-        Cuisine cuisine = map(dishDto.getCuisine());
+        Cuisine cuisine = enumValueChecker.checkCuisine(dishDto.getCuisine());
         dish.setCuisine(cuisine);
         return dish;
     
@@ -55,17 +61,33 @@ public class ValueMapper {
         dish.setAvailability(dishDto.getAvailability());
         dish.setDescription(dishDto.getDescription());
         dish.setPrice(dishDto.getPrice());
-        Cuisine cuisine = map(dishDto.getCuisine());
+        Cuisine cuisine = enumValueChecker.checkCuisine(dishDto.getCuisine());
         dish.setCuisine(cuisine);
         return dish;
     }
 
-     public Cuisine map(String cuisine) {
-        try {
-            return Cuisine.valueOf(cuisine.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            throw new InvalidEnumValueException(cuisine.concat(" Invaild cuisine! Available cuisine - Chinese, continental, north-Indian, south-Indian"));
+    
+
+    public Orders orderDto_To_Order(OrderDto orderDto){
+        Orders order = new Orders();
+        order.setDeliveryAddress(orderDto.getDeliveryAddress());
+        order.setDeliveryStatus(orderDto.getDeliveryStatus());
+        List<OrderItem> orderItem = orderItemDto_to_OrderItem(orderDto.getOrderItems());
+        order.setTotalPrice(orderDto.getTotalPrice());
+        order.setOrderItems(orderItem);
+        return order;
+    }
+
+    public List<OrderItem> orderItemDto_to_OrderItem(List<OrderItemDTO> orderItemDTO  ){
+        List<OrderItem> items = new ArrayList<>();
+       
+        for(OrderItemDTO i : orderItemDTO ){ 
+            OrderItem temp = new OrderItem();
+            temp.setItemName(i.getItemName());
+            temp.setQuantity(i.getQuantity());
+            items.add(temp);
         }
+        return items;
     }
     
 }

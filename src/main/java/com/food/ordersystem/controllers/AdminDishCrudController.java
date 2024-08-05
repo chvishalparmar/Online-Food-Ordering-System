@@ -7,7 +7,7 @@ import com.food.ordersystem.dto.APIResponse;
 import com.food.ordersystem.dto.DishDto;
 import com.food.ordersystem.dto.ErrorDto;
 import com.food.ordersystem.enitites.Dish;
-import com.food.ordersystem.services.DishCrudService;
+import com.food.ordersystem.services.DishService;
 import com.food.ordersystem.vaildationgroup.CreateGroup;
 import com.food.ordersystem.vaildationgroup.UpdateGroup;
 
@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RequiredArgsConstructor
 public class AdminDishCrudController {
 
-    private final DishCrudService dishCrudService;
+    private final DishService dishCrudService;
 
     public static final String SUCCESS = "Success";
 

@@ -25,7 +25,7 @@ public class UserServiceImp implements UserService {
     public User saveUser(UserDto userDto) {
         Optional<User> finduser = userRepo.findByUserName(userDto.getUsername());
         if (finduser.isEmpty()) {
-            User user = valueMapper.userDtoToUser(userDto);
+            User user = valueMapper.userDto_To_User(userDto);
             user.setRoles("USER");
             return userRepo.save(user);
         } else {
