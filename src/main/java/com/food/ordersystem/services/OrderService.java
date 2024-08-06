@@ -12,4 +12,5 @@ public interface OrderService {
     Orders getOrder(OrderDto orderDto);
     boolean deleteOrder(OrderDto orderDto);
     List<Orders> getOrderByDeliverySatus(UserDto userDto , DeliveryStatus status);
+    List<Orders> getOrdersForAdmin(DeliveryStatus status);
 }

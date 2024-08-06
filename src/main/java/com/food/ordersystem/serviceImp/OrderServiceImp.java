@@ -65,5 +65,10 @@ public class OrderServiceImp implements OrderService {
        User user = userService.getUser(userDto);
        return orderRepo.findByUserAndDeliveryStatus(user, status);
    }
+
+   @Override
+   public List<Orders> getOrdersForAdmin(DeliveryStatus status) {
+      return orderRepo.findByDeliveryStatus(status);
+   }
     
 }

@@ -61,4 +61,12 @@ public class CustomExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(BillExceptionHandler.class)
+    public ResponseEntity<APIResponse<?>> handleBillExceptionHandlerException(BillExceptionHandler e){
+        APIResponse<?> response = new APIResponse<>();
+        response.setStatus(FAILED);
+        response.setErrors(Collections.singletonList(new ErrorDto("Bill", e.getMessage())));
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
 }

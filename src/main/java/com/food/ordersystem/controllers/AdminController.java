@@ -51,7 +51,7 @@ public class AdminController {
         
     }
 
-      @DeleteMapping("delete/{username}")
+    @DeleteMapping("delete/{username}")
     public ResponseEntity<APIResponse<?>> deleteUser(@PathVariable String username){
         UserDto userDto = new UserDto();
         userDto.setUsername(username);

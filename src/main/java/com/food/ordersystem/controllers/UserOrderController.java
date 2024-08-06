@@ -4,10 +4,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.food.ordersystem.dto.APIResponse;
+import com.food.ordersystem.dto.BillDto;
 import com.food.ordersystem.dto.OrderDto;
 import com.food.ordersystem.dto.UserDto;
 import com.food.ordersystem.enitites.Orders;
 import com.food.ordersystem.enums.ApiResponseStatus;
+import com.food.ordersystem.services.BillService;
 import com.food.ordersystem.services.CURDOrderService;
 import com.food.ordersystem.vaildationgroup.CreateGroup;
 import com.food.ordersystem.vaildationgroup.UpdateGroup;
@@ -29,12 +31,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 
 
+
 @RestController
 @RequestMapping("/user/")
 @RequiredArgsConstructor
 public class UserOrderController {
     
     private final CURDOrderService curdOrderService;
+
+    private final BillService billService;
     
     @PostMapping("order")
     public ResponseEntity<APIResponse<?>> createOrder(@Validated(CreateGroup.class) @RequestBody OrderDto orderDto) {
@@ -56,7 +61,7 @@ public class UserOrderController {
     public ResponseEntity<APIResponse<?>> getOrderStatus(@PathVariable String status) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        List<Orders> order = curdOrderService.getOrder(status, username);
+        List<Orders> order = curdOrderService.getOrderStatus(status, username);
 
         APIResponse<List<Orders>> response = APIResponse.<List<Orders>>builder()
                                             .status(ApiResponseStatus.SUCCESS.toString())
@@ -65,6 +70,37 @@ public class UserOrderController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<APIResponse<?>> getById(@PathVariable Long id) {
+        OrderDto orderDto = new OrderDto();
+        orderDto.setOrderNumber(id);
+        Orders order = curdOrderService.getOrder(orderDto);
+        APIResponse<Orders> response = APIResponse.<Orders>builder()
+                                        .status(ApiResponseStatus.SUCCESS.toString())
+                                        .results(order)
+                                        .build();
+        
+       return new ResponseEntity<>(response, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/get/bill/{id}")
+    public ResponseEntity<APIResponse<?>> getBill(@PathVariable Long id) {
+        OrderDto orderDto = new OrderDto();
+        orderDto.setOrderNumber(id);
+        BillDto dto = billService.getBill(orderDto);
+
+        APIResponse<BillDto> response = APIResponse.<BillDto>builder()
+                                        .status(ApiResponseStatus.SUCCESS.toString())
+                                        .results(dto)
+                                        .build();
+        
+       return new ResponseEntity<>(response, HttpStatus.OK);
+
+    }
+    
+    
     
     @PutMapping("update/order")
     public ResponseEntity<APIResponse<?>> updateAddress(@Validated(UpdateGroup.class) @RequestBody OrderDto orderDto) {

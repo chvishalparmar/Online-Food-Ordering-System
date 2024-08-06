@@ -63,5 +63,13 @@ public class DishServiceImp implements DishService {
     public List<Dish> checkItemAvaibility() {
         return dishRepo.findAvailableDishes();
     }
+
+    @Override
+    public Dish upadteavailability(DishDto dishDto) {
+        Dish dish = getDish(dishDto);
+        dish.setAvailability(dishDto.getAvailability());
+        return dishRepo.save(dish);
+
+    }
     
 }

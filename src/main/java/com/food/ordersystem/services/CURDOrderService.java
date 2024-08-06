@@ -7,6 +7,11 @@ public interface CURDOrderService {
     
     Orders createOrder(OrderDto orderDto);
     Orders updateOrder(OrderDto orderDto);
-    List<Orders> getOrder(String status , String username);
+    List<Orders> getOrderStatus(String status , String username);
+    List<Orders> getOrderStatusForAdmin(String status);
+    Orders getOrder(OrderDto orderDto);
     Orders cancelOrder(OrderDto orderDto);
+    Orders updateStatus(Long id , String status);
+   
+
 }

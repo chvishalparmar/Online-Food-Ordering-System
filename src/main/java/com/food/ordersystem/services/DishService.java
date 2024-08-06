@@ -12,5 +12,6 @@ public interface DishService {
     Dish getDish(DishDto dishDto);
     boolean deleteDish(DishDto dishDto);
     List<Dish> checkItemAvaibility();
+    Dish upadteavailability(DishDto dishDto);
     
 }

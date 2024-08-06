@@ -78,7 +78,7 @@ public class CurdOrderServiceImp implements CURDOrderService {
     }
 
     @Override
-    public List<Orders> getOrder(String status , String username) {
+    public List<Orders> getOrderStatus(String status , String username) {
        DeliveryStatus deliveryStatus = enumValueChecker.checkDeliveryStatus(status);
        UserDto dto = new UserDto();
        dto.setUsername(username);
@@ -91,6 +91,33 @@ public class CurdOrderServiceImp implements CURDOrderService {
         orders.setDeliveryStatus(DeliveryStatus.CANCELED);
         return orderService.upadateOrder(orders);
     }
+
+    @Override
+    public Orders getOrder(OrderDto orderDto) {
+        return orderService.getOrder(orderDto);
+    }
+
+    @Override
+    public List<Orders> getOrderStatusForAdmin(String status) {
+        DeliveryStatus deliveryStatus = enumValueChecker.checkDeliveryStatus(status);
+        return orderService.getOrdersForAdmin(deliveryStatus);
+    }
+
+    @Override
+    public Orders updateStatus(Long id , String status) {
+        DeliveryStatus deliveryStatus = enumValueChecker.checkDeliveryStatus(status);
+
+        OrderDto orderDto = new OrderDto();
+        orderDto.setOrderNumber(id);
+
+        Orders order = orderService.getOrder(orderDto);
+
+        order.setDeliveryStatus(deliveryStatus);
+
+        return orderService.upadateOrder(order);
+        
+    }
+
 
     
     

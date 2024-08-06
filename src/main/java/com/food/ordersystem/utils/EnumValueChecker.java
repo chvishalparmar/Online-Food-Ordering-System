@@ -13,7 +13,7 @@ public class EnumValueChecker {
         try {
             return Cuisine.valueOf(cuisine.toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new InvalidEnumValueException(cuisine.concat(" Invaild cuisine! Available cuisine - Chinese, continental, north-Indian, south-Indian"));
+            throw new InvalidEnumValueException(cuisine.concat(" Invaild cuisine! Available cuisine - Chinese, Continental, North_Indian, South_Indian"));
         }
     }
 

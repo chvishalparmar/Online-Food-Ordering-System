@@ -9,4 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OrderRepo extends JpaRepository<Orders , Long> {
     List<Orders> findByUserAndDeliveryStatus(User user, DeliveryStatus deliveryStatus);
+    List<Orders> findByDeliveryStatus(DeliveryStatus deliveryStatus);
 }
