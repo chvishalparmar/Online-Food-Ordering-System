@@ -7,10 +7,12 @@ import org.springframework.stereotype.Service;
 import com.food.ordersystem.dto.DishDto;
 import com.food.ordersystem.dto.OrderDto;
 import com.food.ordersystem.dto.OrderItemDTO;
+import com.food.ordersystem.dto.ReviewDto;
 import com.food.ordersystem.dto.UserDto;
 import com.food.ordersystem.enitites.Dish;
 import com.food.ordersystem.enitites.OrderItem;
 import com.food.ordersystem.enitites.Orders;
+import com.food.ordersystem.enitites.Review;
 import com.food.ordersystem.enitites.User;
 import com.food.ordersystem.enums.Cuisine;
 
@@ -88,6 +90,14 @@ public class ValueMapper {
             items.add(temp);
         }
         return items;
+    }
+
+    public Review ReviewDto_To_Review(ReviewDto reviewDto){
+        Review review = new Review();
+        review.setComment(reviewDto.getComment());
+        review.setRating(reviewDto.getRating());
+        return review;
+
     }
     
 }

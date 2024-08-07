@@ -20,6 +20,7 @@ import lombok.Setter;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.food.ordersystem.enums.Cuisine;
 
 @Data
@@ -47,12 +48,28 @@ public class Dish {
     private Cuisine cuisine;
     
     private Boolean availability;
-    
+
     @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Review> reviews;
     
     private Double avgRating;
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+        updateAvgRating();
+    }
     
+    public void updateAvgRating() {
+        if (reviews == null || reviews.isEmpty()) {
+            avgRating = 0.0;
+        } else {
+            double sum = reviews.stream()
+                    .mapToDouble(review -> review.getRating() == null ? 0 : review.getRating())
+                    .sum();
+            avgRating = sum / reviews.size();
+        }
+    }
     
   
 }
