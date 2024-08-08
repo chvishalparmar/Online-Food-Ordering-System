@@ -18,8 +18,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 
 @RestController
@@ -52,6 +54,18 @@ public class MenuController {
                                         .build();
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
+
+    @GetMapping("/byrating")
+    public ResponseEntity<APIResponse<?>> getByRating() {
+        List<Dish> aviableDish = dishService.checkItemAvaibility();
+        aviableDish.sort(Comparator.comparing(Dish :: getAvgRating).reversed());
+        APIResponse<List<Dish>> responseDTO = APIResponse.<List<Dish>>builder()
+                                            .status(ApiResponseStatus.SUCCESS.toString())
+                                            .results(aviableDish)
+                                            .build();
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+    
 
     @GetMapping("/bycuisine/{name}")
     public ResponseEntity<APIResponse<?>> byCuisine(@PathVariable String name) {

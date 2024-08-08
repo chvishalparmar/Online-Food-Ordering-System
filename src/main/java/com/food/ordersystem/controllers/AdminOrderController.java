@@ -11,6 +11,7 @@ import com.food.ordersystem.services.CURDOrderService;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,17 @@ public class AdminOrderController {
                                             .status(ApiResponseStatus.SUCCESS.toString())
                                             .results(orders)
                                             .build();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
+    @GetMapping("get/quantity/{status}")
+    public ResponseEntity<APIResponse<?>> getOrdersQuantity(@PathVariable String status) {
+        HashMap<String , Integer> orders = curdOrderService.getOrdersQunatity(status);
+
+        APIResponse<HashMap<String , Integer>> response = APIResponse.<HashMap<String , Integer>>builder()
+                                            .status(ApiResponseStatus.SUCCESS.toString())
+                                            .results(orders)
+                                            .build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

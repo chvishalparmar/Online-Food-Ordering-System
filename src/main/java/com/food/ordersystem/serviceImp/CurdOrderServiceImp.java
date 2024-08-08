@@ -5,6 +5,7 @@ import com.food.ordersystem.dto.OrderDto;
 import com.food.ordersystem.dto.OrderItemDTO;
 import com.food.ordersystem.dto.UserDto;
 import com.food.ordersystem.enitites.Dish;
+import com.food.ordersystem.enitites.OrderItem;
 import com.food.ordersystem.enitites.Orders;
 import com.food.ordersystem.enums.DeliveryStatus;
 import com.food.ordersystem.exceptions.DishNotFoundException;
@@ -116,6 +117,24 @@ public class CurdOrderServiceImp implements CURDOrderService {
 
         return orderService.upadateOrder(order);
         
+    }
+
+    @Override
+    public HashMap<String , Integer> getOrdersQunatity(String status) {
+        List<Orders> order = getOrderStatusForAdmin(status);
+
+        HashMap<String , Integer> orderMap = new HashMap<>();
+
+        for(Orders items : order){
+
+            for(OrderItem orderitem : items.getOrderItems()){
+                orderMap.put(orderitem.getItemName(), 
+                orderMap.getOrDefault(orderitem.getItemName(), 0) 
+                + orderitem.getQuantity());
+            }
+        }
+
+        return orderMap;
     }
 
 
