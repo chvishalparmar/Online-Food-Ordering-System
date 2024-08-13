@@ -26,7 +26,11 @@ public class JwtTokenUtil {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+        Claims claims;
+    
+         claims= Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+        
+        return claims;
     }
 
     public String generateToken(UserDetails userDetails) {
