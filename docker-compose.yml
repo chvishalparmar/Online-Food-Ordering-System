@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "9090:9090"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/foodorderingsystem
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver   
+
+
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: foodorderingsystem
+    volumes:
+      - mysql_data:/var/lib/mysql
+<<<<<<< HEAD:dockercompose.yml
+volumes:
+ mysql_data: {}
+=======
+  volumes:
+    mysql_data:
+>>>>>>> c1782fb3a2d5baa7091084a2828a3f48633d632f:docker-compose.yml
