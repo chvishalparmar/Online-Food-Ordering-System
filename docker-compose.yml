@@ -21,10 +21,5 @@ services:
       MYSQL_DATABASE: foodorderingsystem
     volumes:
       - mysql_data:/var/lib/mysql
-<<<<<<< HEAD:dockercompose.yml
 volumes:
  mysql_data: {}
-=======
-  volumes:
-    mysql_data:
->>>>>>> c1782fb3a2d5baa7091084a2828a3f48633d632f:docker-compose.yml
