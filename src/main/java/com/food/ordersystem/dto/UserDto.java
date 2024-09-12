@@ -5,6 +5,7 @@ import com.food.ordersystem.vaildationgroup.UpdateGroup;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,9 +23,11 @@ import lombok.ToString;
 public class UserDto {
 
     @NotBlank(message = "Username is mandatory" , groups = CreateGroup.class)
+    @Pattern(regexp = "\\S+", message = "Username cannot contain spaces", groups = CreateGroup.class)
     @Size(min = 4, max = 8, message = "Username must be between 3 and 50 characters" ,  groups = CreateGroup.class)
     private String username;
     @NotBlank(message = "Password is mandatory" ,  groups = {CreateGroup.class, UpdateGroup.class})
+    @Pattern(regexp = "\\S+", message = "Password cannot contain spaces")
     @Size(min = 4, max = 8 , message = "Password must be at least 8 characters" ,  groups = {CreateGroup.class, UpdateGroup.class})
     private String password;
     @NotBlank(message = "Name is mandatory" ,  groups = {CreateGroup.class, UpdateGroup.class})

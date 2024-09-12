@@ -10,11 +10,14 @@ spring:
     password: root
     driver-class-name: com.mysql.jdbc.Driver
 
+normal:
+  username: vishal
+  password: user
 
-
-#main:
-#allow-circular-references: true
-
+admin:
+ username: admin
+ password: admin
+ 
 #Server Configuration
 server:
     port: 9090

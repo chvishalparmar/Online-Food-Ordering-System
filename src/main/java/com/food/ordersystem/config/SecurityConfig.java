@@ -24,6 +24,7 @@ import com.food.ordersystem.exceptions.UserNotFoundException;
 import com.food.ordersystem.repo.UserRepo;
 
 import com.food.ordersystem.security.JwtAuthenticationFilter;
+import org.springframework.beans.factory.annotation.Value;
 
 @Configuration
 @EnableWebSecurity
@@ -35,6 +36,20 @@ public class SecurityConfig {
     
     @Autowired
     private UserRepo userRepo;
+
+    @Value("${normal.username}")
+    private String normalUsername;
+
+    @Value("${normal.password}")
+    private String normalPassword;
+
+    @Value("${admin.username}")
+    private String adminUsername;
+
+    @Value("${admin.password}")
+    private String adminPassword;
+
+
 
     
     @Bean
@@ -67,12 +82,12 @@ public class SecurityConfig {
     InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
     
     // Create in-memory users
-    UserDetails normalUser = User.withUsername("Vishal")
-            .password(passwordEncoder().encode("user"))
+    UserDetails normalUser = User.withUsername(normalUsername)
+            .password(passwordEncoder().encode(normalPassword))
             .roles("USER")
             .build();
-    UserDetails adminUser = User.withUsername("admin")
-            .password(passwordEncoder().encode("admin"))
+    UserDetails adminUser = User.withUsername(adminUsername)
+            .password(passwordEncoder().encode(adminPassword))
             .roles("ADMIN")
             .build();
     inMemoryUserDetailsManager.createUser(normalUser);
