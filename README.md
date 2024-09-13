@@ -1,13 +1,20 @@
 # Online-Food-Ordering-System
 The objective of this Project is to design and develop an Online Food Ordering System using Java and Spring Boot. The application should allow users to view menus, place orders.It uses Docker for containerization and Docker Compose to manage multi-container setups including a MySQL database.
 ## Prerequisites
-  Docker: Install Docker
-  Docker Compose: Install Docker Compose
+  * Docker: Install Docker
+  * Docker Compose: Install Docker Compose
   
 ## Project Structure
-  Dockerfile: Contains instructions to build the Docker image for the Spring Boot application.
-  docker-compose.yml: Defines and runs multi-container Docker applications, including the Spring Boot app and a MySQL 
+  * Dockerfile: Contains instructions to build the Docker image for the Spring Boot application.
+  * docker-compose.yml: Defines and runs multi-container Docker applications, including the Spring Boot app and a MySQL 
   database.
+
+## Configuration 
+* Profiles: The ***docker-compose.yml*** file includes an environment variable ***SPRING_PROFILE=docker*** to activate the docker profile in your Spring Boot application. You can modify this to use a different profile if needed.
+* Database Connection: Ensure your Spring Boot application is configured to connect to the MySQL database using the correct URL, username, and password specified in ***docker-compose.yml***.
+* Spring Boot Environment Variables: Configuration for the Spring Boot application is defined in the docker-compose.yml file under the app service. Modify the environment variables as needed.
+* MySQL Configuration: Database credentials and settings are defined in the docker-compose.yml file under the db service. Adjust as necessary.
+* Customization: You can customize the Docker Compose file and Spring Boot application to suit your specific requirements.
   
 ## Build and Run the Application
 
@@ -45,9 +52,6 @@ docker-compose down
 ```
 This will stop and remove the containers, but it will not remove the volumes.
 
-## Configuration
-Spring Boot Environment Variables: Configuration for the Spring Boot application is defined in the docker-compose.yml file under the app service. Modify the environment variables as needed.
-
-MySQL Configuration: Database credentials and settings are defined in the docker-compose.yml file under the db service. Adjust as necessary.
+***Happy Coding***
 
 
