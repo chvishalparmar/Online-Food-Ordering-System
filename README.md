@@ -13,8 +13,8 @@ The objective of this Project is to design and develop an Online Food Ordering S
 
 ### Clone the Repository
 ```
-git clone <repository-url>
-cd <repository-directory>
+git clone https://github.com/chvishalparmar/Online-Food-Ordering-System.git
+cd Online-Food-Ordering-System
 ```
 
 ### Build the Docker Images 
