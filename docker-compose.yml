@@ -3,24 +3,34 @@ version: '3.8'
 services:
   app:
     build: .
+    container_name: ordersystem
     ports:
       - "9090:9090"
     depends_on:
       - db
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/foodorderingsystem
+      - SPRING_DATASOURCE_URL=jdbc:mysql://database:3306/foodorderingsystem
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
-      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver   
-
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver
+    networks:
+      - ordersystem-network
 
   db:
     image: mysql:latest
+    container_name: database
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: foodorderingsystem
+      MYSQL_USER: root
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - ordersystem-network
+
+networks:
+  ordersystem-network:
+
 volumes:
- mysql_data: 
+  mysql_data:
